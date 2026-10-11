@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Trips</h1>
+  <button class="btn btn-info" (click)="addTrip()">Add Trip</button>
+</div>
+
+<p class="text-muted">{{ message }}</p>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  @for (trip of trips; track trip.code) {
+    <div class="col">
+      <app-trip-card [trip]="trip" (deleted)="onTripDeleted($event)"></app-trip-card>
+    </div>
+  }
+</div>
