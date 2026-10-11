@@ -1,0 +1,58 @@
+<h1 class="h3 mb-1">Edit Trip</h1>
+<p class="text-muted">{{ message }}</p>
+
+@if (error) {
+  <div class="alert alert-danger">{{ error }}</div>
+}
+
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="col-lg-8">
+  <div class="mb-3">
+    <label class="form-label" for="code">Code</label>
+    <input id="code" class="form-control" formControlName="code">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="name">Name</label>
+    <input id="name" class="form-control" formControlName="name"
+           [class.is-invalid]="submitted && f.name.errors">
+    <div class="invalid-feedback">Name is required</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="length">Length</label>
+    <input id="length" class="form-control" formControlName="length"
+           [class.is-invalid]="submitted && f.length.errors">
+    <div class="invalid-feedback">Length is required</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="start">Start</label>
+    <input id="start" type="date" class="form-control" formControlName="start"
+           [class.is-invalid]="submitted && f.start.errors">
+    <div class="invalid-feedback">Start date is required</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="resort">Resort</label>
+    <input id="resort" class="form-control" formControlName="resort"
+           [class.is-invalid]="submitted && f.resort.errors">
+    <div class="invalid-feedback">Resort is required</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="perPerson">Per Person</label>
+    <input id="perPerson" class="form-control" formControlName="perPerson"
+           [class.is-invalid]="submitted && f.perPerson.errors">
+    <div class="invalid-feedback">Price per person is required</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="image">Image</label>
+    <input id="image" class="form-control" formControlName="image"
+           [class.is-invalid]="submitted && f.image.errors">
+    <div class="form-text">Image name in public/images, without the .jpg extension</div>
+    <div class="invalid-feedback">Image is required</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="description">Description</label>
+    <textarea id="description" rows="6" class="form-control" formControlName="description"
+              [class.is-invalid]="submitted && f.description.errors"></textarea>
+    <div class="invalid-feedback">Description is required</div>
+  </div>
+  <button type="submit" class="btn btn-info">Save</button>
+  <a routerLink="/" class="btn btn-link">Cancel</a>
+</form>

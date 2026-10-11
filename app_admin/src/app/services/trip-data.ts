@@ -1,0 +1,39 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { Trip } from '../models/trip';
+
+// Talks to the Express REST API in app_api
+@Injectable({
+  providedIn: 'root'
+})
+export class TripData {
+  private http = inject(HttpClient);
+  private url = 'http://localhost:3000/api/trips';
+
+  // GET: /trips
+  getTrips(): Observable<Trip[]> {
+    return this.http.get<Trip[]>(this.url);
+  }
+
+  // GET: /trips/:tripCode (API returns an array with a single trip)
+  getTrip(tripCode: string): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${this.url}/${tripCode}`);
+  }
+
+  // POST: /trips
+  addTrip(formData: Trip): Observable<Trip> {
+    return this.http.post<Trip>(this.url, formData);
+  }
+
+  // PUT: /trips/:tripCode
+  updateTrip(tripCode: string, formData: Trip): Observable<Trip> {
+    return this.http.put<Trip>(`${this.url}/${tripCode}`, formData);
+  }
+
+  // DELETE: /trips/:tripCode
+  deleteTrip(tripCode: string): Observable<Trip> {
+    return this.http.delete<Trip>(`${this.url}/${tripCode}`);
+  }
+}
