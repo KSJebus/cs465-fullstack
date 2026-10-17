@@ -1,14 +1,30 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/">Travlr Getaways Admin</a>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav me-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/" routerLinkActive="active"
            [routerLinkActiveOptions]="{ exact: true }">Trips</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/add-trip" routerLinkActive="active">Add Trip</a>
-      </li>
+      @if (isLoggedIn()) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/add-trip" routerLinkActive="active">Add Trip</a>
+        </li>
+      }
+    </ul>
+    <ul class="navbar-nav">
+      @if (isLoggedIn()) {
+        <li class="nav-item">
+          <span class="navbar-text me-3">Signed in as {{ userName() }}</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="" (click)="$event.preventDefault(); onLogout()">Log Out</a>
+        </li>
+      } @else {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Log In</a>
+        </li>
+      }
     </ul>
   </div>
 </nav>

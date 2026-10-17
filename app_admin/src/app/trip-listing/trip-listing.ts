@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { TripCard } from '../trip-card/trip-card';
 import { TripData } from '../services/trip-data';
+import { Authentication } from '../services/authentication';
 import { Trip } from '../models/trip';
 
 @Component({
@@ -14,12 +15,17 @@ import { Trip } from '../models/trip';
 export class TripListing implements OnInit {
   private tripData = inject(TripData);
   private router = inject(Router);
+  private authentication = inject(Authentication);
 
   trips: Trip[] = [];
   message = '';
 
   ngOnInit(): void {
     this.getTrips();
+  }
+
+  isLoggedIn(): boolean {
+    return this.authentication.isLoggedIn();
   }
 
   addTrip(): void {

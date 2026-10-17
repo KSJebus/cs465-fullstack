@@ -3,6 +3,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { TripData } from '../services/trip-data';
+import { Authentication } from '../services/authentication';
 import { Trip } from '../models/trip';
 
 @Component({
@@ -14,12 +15,17 @@ import { Trip } from '../models/trip';
 export class TripCard {
   private router = inject(Router);
   private tripData = inject(TripData);
+  private authentication = inject(Authentication);
 
   @Input({ required: true }) trip!: Trip;
   @Output() deleted = new EventEmitter<string>();
 
   // Images are served by the Express public site
   readonly imageBase = 'http://localhost:3000/images/';
+
+  isLoggedIn(): boolean {
+    return this.authentication.isLoggedIn();
+  }
 
   editTrip(trip: Trip): void {
     this.router.navigate(['edit-trip', trip.code]);

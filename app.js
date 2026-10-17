@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -9,9 +11,13 @@ var usersRouter = require('./app_server/routes/users');
 var travelRouter = require('./app_server/routes/travel');
 var apiRouter = require('./app_api/routes/index');
 var handlebars = require('hbs');
+var passport = require('passport');
 
 // Bring in the database
 require('./app_api/models/db');
+
+// Wire in our authentication module
+require('./app_api/config/passport');
 
 var app = express();
 
@@ -27,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 // Enable CORS so the Angular admin SPA (localhost:4200) can call the API
 app.use('/api', (req, res, next) => {

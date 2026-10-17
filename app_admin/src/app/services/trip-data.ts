@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Trip } from '../models/trip';
+import { User } from '../models/user';
+import { AuthResponse } from '../models/auth-response';
 
 // Talks to the Express REST API in app_api
 @Injectable({
@@ -10,7 +12,8 @@ import { Trip } from '../models/trip';
 })
 export class TripData {
   private http = inject(HttpClient);
-  private url = 'http://localhost:3000/api/trips';
+  private baseUrl = 'http://localhost:3000/api';
+  private url = `${this.baseUrl}/trips`;
 
   // GET: /trips
   getTrips(): Observable<Trip[]> {
@@ -35,5 +38,24 @@ export class TripData {
   // DELETE: /trips/:tripCode
   deleteTrip(tripCode: string): Observable<Trip> {
     return this.http.delete<Trip>(`${this.url}/${tripCode}`);
+  }
+
+  // POST: /login
+  login(user: User, password: string): Observable<AuthResponse> {
+    return this.handleAuthAPICall('login', user, password);
+  }
+
+  // POST: /register
+  register(user: User, password: string): Observable<AuthResponse> {
+    return this.handleAuthAPICall('register', user, password);
+  }
+
+  private handleAuthAPICall(endpoint: string, user: User, password: string): Observable<AuthResponse> {
+    const formData = {
+      name: user.name,
+      email: user.email,
+      password: password
+    };
+    return this.http.post<AuthResponse>(`${this.baseUrl}/${endpoint}`, formData);
   }
 }

@@ -11,8 +11,10 @@
     </p>
     <div class="card-text small" [innerHTML]="trip.description"></div>
   </div>
-  <div class="card-footer bg-transparent d-flex gap-2">
-    <button class="btn btn-info btn-sm" (click)="editTrip(trip)">Edit Trip</button>
-    <button class="btn btn-outline-danger btn-sm" (click)="deleteTrip(trip)">Delete</button>
-  </div>
+  @if (isLoggedIn()) {
+    <div class="card-footer bg-transparent d-flex gap-2">
+      <button class="btn btn-info btn-sm" (click)="editTrip(trip)">Edit Trip</button>
+      <button class="btn btn-outline-danger btn-sm" (click)="deleteTrip(trip)">Delete</button>
+    </div>
+  }
 </div>
